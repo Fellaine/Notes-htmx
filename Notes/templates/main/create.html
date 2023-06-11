@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+{#    {% crispy form %}#}
+    {% load crispy_forms_tags %}
+    {% crispy form form.helper %}
+
+
+{#    <form method="POST">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    {% crispy form %}#}
+{#    <input class="btn btn-sm btn-outline-secondary" type="submit" value="Save">#}
+{#    </form>#}
+
+{% endblock content %}

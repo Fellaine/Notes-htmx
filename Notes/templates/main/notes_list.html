@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% load bootstrap5 %}
+{#{% bootstrap_messages %} refuses to work w/o loading bootstrap again, everything else works fine#}
+
+{% block content %}
+    {% bootstrap_messages %}
+
+    <header>
+    <nav class="navbar navbar-dark bg-secondary">
+        <h6 class="navbar-brand" style="margin-left: 5px">Notes</h6>
+        <form style="margin-right: 5px;justify-content: center;">
+          <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search" hx-post="{% url 'search' %}"
+                   hx-trigger="keyup changed delay:500ms" hx-target="#parent-div" hx-swap="innerHTML show:top"/>
+    {#              <button class="btn btn-sm btn-dark btn-outline-light" type="submit">Search</button>#}
+          </div>
+        </form>
+        <div style="justify-content: right;">
+        {% comment %} <h6 class="navbar-brand d-inline" style="margin: 5px">{{ request.user }}</h6> {% endcomment %}
+        <button hx-post="{% url 'logout' %}" hx-trigger="click" hx-target="#parent-div" hx-swap="innerHTML show:top"
+                hx-confirm="Are you sure you want to log out?" class="btn btn-secondary btn-outline-dark d-inline"
+                style="margin: 5px;border-width: 2px;color: white;"> Log out </button>
+        </div>
+    </nav>
+    </header>
+
+    <h2 style="text-align: center; margin-top: 5px">Your notes:</h2>
+    <div id="empty" class="album py-5 bg-light" hx-get="{% url 'empty' %}" hx-trigger="click target:#empty"
+                         hx-target="#parent-div" hx-swap="innerHTML">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for note in notes %}
+{#            <li>#}
+{#                Title: {{ note.title }}, Content: {{ note.content }}#}
+{#                <a href="notes/{{ note.id }}">Edit</a>#}
+{#                <a href="delete/{{ note.id }}">Delete</a>#}
+{#            </li>#}
+
+                    <div class="col" hx-get="{% url 'edit' note.id %}" hx-trigger="click target:#myid" hx-target="#parent-div"
+                         hx-swap="innerHTML show:top" id="myid">
+                      <div class="card shadow-sm" >
+                        <div class="card-body">
+                          <h5 class="card-title">{{ note.title }}</h5>
+                            <div class="overflow-auto" style="max-height: 5em;">
+                                <p class="card-text">{{ note.content }}</p>
+                            </div>
+{#                          <p class="card-text" style="overflow: hidden;max-height: 25px;">{{ note.content }}</p>#}
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button hx-get="{% url 'edit' note.id %}" hx-trigger="click" hx-target="#parent-div"
+                                        hx-swap="innerHTML show:top" class="btn btn-sm btn-outline-secondary"> Edit
+                                </button>
+                                <button hx-delete="{% url 'delete' note.id %}" hx-trigger="click" hx-target="closest #myid"
+                                        hx-swap="innerHTML show:top" hx-confirm="Are you sure about that ?"
+                                        class="btn btn-sm btn-outline-secondary"> Delete
+                                </button>
+{#                                <button hx-get="{% url 'delete' note.id %}" hx-trigger="click" hx-target="#parent-div"#}
+{#                                        hx-swap="innerHTML show:top" class="btn btn-sm btn-outline-secondary"> Delete#}
+{#                                </button>#}
+
+{#                              <a href="notes/{{ note.id }}" class="btn btn-sm btn-outline-secondary" role="button">Edit</a>#}
+{#                                <a href="delete/{{ note.id }}" class="btn btn-sm btn-outline-secondary" role="button">Delete</a>#}
+                            </div>
+                            <small class="text-muted">Last edited: {{ note.last_edited }}</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+        {% endfor %}
+            </div>
+        </div>
+    </div>
+{#    <button hx-get="/notes/5"#}
+{#    hx-trigger="click"#}
+{#    hx-target="#parent-div"#}
+{#    hx-swap="outerHTML">Click Me!</button>#}
+
+<button
+        hx-get="{% url 'create' %}" hx-trigger="click" hx-target="#parent-div"
+                                        hx-swap="innerHTML show:top" class="btn btn-sm btn-outline-secondary"
+        style=" /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none;
+  padding: 0; /* Rounded corners */"
+        >
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+</svg>
+</button>
+<div class="d-flex justify-content-center p-3" id="parent-div"></div>
+
+{% endblock content %}

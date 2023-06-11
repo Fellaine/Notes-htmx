@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./Notes:/Notes
+    command: >
+      sh -c "python manage.py migrate && gunicorn Notes.wsgi:application --bind '0.0.0.0:3003'"
+    env_file:
+      - Notes/.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    env_file:
+      - Notes/.env
+    ports:
+      - "5436:5436"
+    volumes:
+    - my-volume:/var/lib/postgresql/data
+
+volumes:
+  my-volume:

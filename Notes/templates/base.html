@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Title</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+{#        {% load crispy_forms_tags %}#}
+        <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
+	</head>
+	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>  {# to allow POST requests via htmx #}
+
+		{% block content %}
+
+		{% endblock %}
+	</body>
+{#    <script>#}
+{#    document.body.addEventListener('htmx:configRequest', (event) => {#}
+{#  event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';})#}
+{#    </script>#}
+</html>

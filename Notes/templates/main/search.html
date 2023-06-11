@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+{% for result in results %}
+
+{#    <li><a href="/notes/{{ result.id }}">Title: {{ result.title }} content: {{ result.content }}</a></li>#}
+    <li><a href="" hx-get="{% url 'edit' result.id %}" hx-trigger="click" hx-target="#parent-div"
+           hx-swap="innerHTML show:top">Title: {{ result.title }} content: {{ result.content|slice:":50" }}</a></li>
+
+{% endfor %}
+</ul>
+{% endblock content %}

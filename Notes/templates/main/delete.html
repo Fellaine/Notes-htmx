@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <form method="POST" action="{% url 'delete' id %}">
+        {% csrf_token %}
+        <p>Are you sure you want to delete note "{{ title }}" ?</p>
+        <input class="btn btn-sm btn-outline-secondary" type="submit" value="Yes, delete">
+    </form>
+
+{% endblock content %}

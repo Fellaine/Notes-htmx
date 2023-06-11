@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    {% crispy form form.helper %}
+{#    <form method="POST" action="/notes/{{ id }}/">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input class="btn btn-sm btn-outline-secondary" type="submit" value="Save">#}
+{#    </form>#}
+
+{% endblock content %}
