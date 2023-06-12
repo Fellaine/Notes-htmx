@@ -9,5 +9,5 @@ sqlparse==0.4.3
 tzdata==2022.7
 gunicorn
 django-dotenv
-# psycopg2-binary
-psycopg2
+psycopg2-binary
+# psycopg2
