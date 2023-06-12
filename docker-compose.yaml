@@ -26,8 +26,8 @@ services:
     image: postgres:13-alpine
     env_file:
       - Notes/.env
-    ports:
-      - "5436:5436"
+    expose:
+      - 5436
     volumes:
     - my-volume:/var/lib/postgresql/data
     networks:
