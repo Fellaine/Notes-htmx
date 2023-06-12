@@ -136,8 +136,7 @@ def empty_view(request):
 
 
 def search_view(request):
-    search_data = request.POST.get("search")
-    if search_data:
+    if search_data := request.POST.get("search"):
         # print(search_data)
         # res = Note.objects.filter(title__icontains=search_data, content__icontains=search_data)
         # ress = Note.objects.filter(Q(user=request.user) & Q(title__icontains=search_data) | Q(content__icontains=search_data))
